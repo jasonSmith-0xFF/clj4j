@@ -5,8 +5,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import clojure.lang.PersistentHashMap;
 import clojure.lang.PersistentVector;
 
+/**
+ * Aggregates Clojure's {@link PersistentVector}, adding support for generics and Java sweeteners.
+ * Clojure's vector can {@link #cons(Object)} to the end, {@link #peek()} and {@link #pop()} from 
+ * the end in constant time. A value can be replaced quickly. Other operations require linear time.
+ * This is similar to Java's {@link java.util.ArrayList} in performance.
+ * @author Jason Smith
+ *
+ * @param <T> Value type.
+ */
 public class CljVector<T> implements ImmutableList<T>, Cloneable
 {
 	private final PersistentVector list;
@@ -205,5 +215,38 @@ public class CljVector<T> implements ImmutableList<T>, Cloneable
 	public String toString() 
 	{
 		return list.toString();
+	}
+
+	/**
+	 * Add the value to end of the vector. So <tt>[1, 2].cons(3)</tt> yields <tt>[1, 2, 3]</tt>.
+	 * @param value Value to add.
+	 * @return The constructed list with the value added.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ImmutableList<T> cons(final T value) 
+	{
+		return new CljVector<T>(list.cons(value));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ImmutableList<T> assoc(final int i, final T val) 
+	{
+		return new CljVector<T>(list.assocN(i, val));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ImmutableList<T> pop() 
+	{
+		return new CljVector<T>(list.pop());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T peek() 
+	{
+		return (T)list.peek();
 	}
 }
