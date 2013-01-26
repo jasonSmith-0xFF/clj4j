@@ -1,12 +1,15 @@
-package com.googlecode.jaks.collections;
+package com.googlecode.clj4j;
 
-import static com.googlecode.jaks.collections.MapUtil.e;
+import static com.googlecode.clj4j.MapUtil.e;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.googlecode.clj4j.ImmutableHashMap;
+import com.googlecode.clj4j.ImmutableMap;
 
 public class TestImmutableHashMap extends Assert
 {
