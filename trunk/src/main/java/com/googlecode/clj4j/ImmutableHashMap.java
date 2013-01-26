@@ -1,4 +1,4 @@
-package com.googlecode.jaks.collections;
+package com.googlecode.clj4j;
 
 import java.util.Collection;
 import java.util.Map;
