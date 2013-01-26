@@ -5,14 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import clojure.lang.PersistentHashMap;
 import clojure.lang.PersistentVector;
 
 /**
  * Aggregates Clojure's {@link PersistentVector}, adding support for generics and Java sweeteners.
  * Clojure's vector can {@link #cons(Object)} to the end, {@link #peek()} and {@link #pop()} from 
  * the end in constant time. A value can be replaced quickly. Other operations require linear time.
- * This is similar to Java's {@link java.util.ArrayList} in performance.
+ * It is similar to Java's {@link java.util.ArrayList} in performance characteristics.
  * @author Jason Smith
  *
  * @param <T> Value type.
