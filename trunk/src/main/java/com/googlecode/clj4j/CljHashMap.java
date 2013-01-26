@@ -15,21 +15,21 @@ import clojure.lang.PersistentHashMap;
  * @param <K> Key type.
  * @param <V> Value type.
  */
-public class ImmutableHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
+public class CljHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
 {
 	private final PersistentHashMap map;
 
 	private static final String UNSUPPORTED_MESSAGE = "Object is immutable.";
 	
-	public ImmutableHashMap(final Map<K,V> map)
+	public CljHashMap(final Map<K,V> map)
 	{
 		if(map instanceof PersistentHashMap)
 		{
 			this.map = (PersistentHashMap)map;
 		}
-		else if(map instanceof ImmutableHashMap)
+		else if(map instanceof CljHashMap)
 		{
-			this.map = ((ImmutableHashMap<K,V>)map).map;
+			this.map = ((CljHashMap<K,V>)map).map;
 		}
 		else
 		{
@@ -37,13 +37,8 @@ public class ImmutableHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
 		}
 	}
 	
-	public ImmutableHashMap()
-	{
-		this.map = (PersistentHashMap)PersistentHashMap.EMPTY;
-	}
-	
 	@SafeVarargs
-	public ImmutableHashMap(final Map.Entry<K,V>... entries)
+	public CljHashMap(final Map.Entry<K,V>... entries)
 	{
 		ITransientMap ret = PersistentHashMap.EMPTY.asTransient();
 		if(entries != null)
@@ -82,9 +77,9 @@ public class ImmutableHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected ImmutableHashMap<K,V> clone() throws CloneNotSupportedException 
+	protected CljHashMap<K,V> clone() throws CloneNotSupportedException 
 	{
-		return (ImmutableHashMap<K,V>)super.clone();
+		return (CljHashMap<K,V>)super.clone();
 	}
 
 	@Override
@@ -161,13 +156,13 @@ public class ImmutableHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
 	@Override
 	public ImmutableMap<K, V> assoc(final K key, final V val) 
 	{
-		return new ImmutableHashMap<K,V>((PersistentHashMap)map.assoc(key, val));
+		return new CljHashMap<K,V>((PersistentHashMap)map.assoc(key, val));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public ImmutableMap<K, V> without(final K key) 
 	{
-		return new ImmutableHashMap<K,V>((PersistentHashMap)map.without(key));
+		return new CljHashMap<K,V>((PersistentHashMap)map.without(key));
 	}
 }
