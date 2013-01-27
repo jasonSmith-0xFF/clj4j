@@ -4,7 +4,7 @@
 	<groupId>com.googlecode</groupId>
 	<artifactId>clj4j</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>clojure-collections</name>
+	<name>clj4j</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.clojure</groupId>
@@ -36,6 +36,11 @@
 					<artifactId>maven-enforcer-plugin</artifactId>
 					<version>1.0.1</version>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.2</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -61,7 +66,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.0</version>
 				<configuration>
 					<reportPlugins>
 						<plugin>
@@ -119,4 +123,16 @@
 			</plugin>
 		</plugins>
 	</build>
+	<developers>
+		<developer>
+			<id>jason</id>
+			<name>Jason Smith</name>
+			<email>jason@lilypepper.com</email>
+			<organizationUrl>http://code.google.com/p/clj4j/</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-6</timezone>
+		</developer>
+	</developers>
 </project>
