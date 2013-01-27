@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2013 by Jason Smith
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.googlecode.clj4j;
 
 import java.util.Collection;
@@ -9,7 +25,7 @@ import clojure.lang.PersistentVector;
 
 /**
  * Aggregates Clojure's {@link PersistentVector}, adding support for generics and Java sweeteners.
- * Clojure's vector can {@link #cons(Object)} to the end, {@link #peek()} and {@link #pop()} from 
+ * Clojure's vector can {@link #conj(Object)} to the end, {@link #peek()} and {@link #pop()} from 
  * the end in constant time. A value can be replaced quickly. Other operations require linear time.
  * It is similar to Java's {@link java.util.ArrayList} in performance characteristics.
  * @author Jason Smith
@@ -223,7 +239,7 @@ public class CljVector<T> implements ImmutableList<T>, Cloneable
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public ImmutableList<T> cons(final T value) 
+	public final ImmutableList<T> conj(final T value) 
 	{
 		return new CljVector<T>(list.cons(value));
 	}
