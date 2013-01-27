@@ -46,4 +46,14 @@ public class Clj4jUtil
 	{
 		return new CljVector<>(values);
 	}
+	
+	public static <K,V> ImmutableMap<K,V> assoc(final ImmutableMap<K,V> map, final K key, final V value)
+	{
+		return map == null ? map(e(key,value)) : map.assoc(key, value);
+	}
+	
+	public static <T> ImmutableList<T> cons(final ImmutableList<T> list, final T value)
+	{
+		return list == null ? list(value) : list.cons(value);
+	}
 }
