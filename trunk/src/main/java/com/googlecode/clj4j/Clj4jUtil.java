@@ -33,6 +33,12 @@ public final class Clj4jUtil
 	{
 	}
 	
+	/**
+	 * Create an immutable instance of {@link Entry}.
+	 * @param key They key.
+	 * @param value The value.
+	 * @return The key/value pair.
+	 */
 	public static <K,V> Map.Entry<K, V> entry(final K key, final V value)
 	{
 		return 
@@ -57,29 +63,63 @@ public final class Clj4jUtil
 					}
 				};
 	}
-	
+
+	/**
+	 * Create an immutable instance of {@link Entry}. This is a shortened version
+	 * of {@link #entry(Object, Object)}.
+	 * @param key They key.
+	 * @param value The value.
+	 * @return The key/value pair.
+	 */
 	public static <K,V> Map.Entry<K, V> e(final K key, final V value)
 	{
 		return entry(key, value);
 	}
 	
+	/**
+	 * Construct an immutable map ({@link CljHashMap}) from a collection of entries.
+	 * @param entries The collection of entries.
+	 * @return The map.
+	 */
 	@SafeVarargs
 	public static <K,V> ImmutableMap<K,V> map(final Entry<K,V>... entries)
 	{
 		return new CljHashMap<>(entries);
 	}
 	
+	/**
+	 * Construct an immutable list ({@link CljVector}) from a collection of values.
+	 * @param values The values.
+	 * @return The list.
+	 */
 	@SafeVarargs
 	public static <T> ImmutableList<T> list(final T... values)
 	{
 		return new CljVector<>(values);
 	}
 	
+	/**
+	 * Construct a new immutable map with the given key and value. If the original map is {@code null},
+	 * the initial map is created by calling {@link #map(Entry...)}. If the key already 
+	 * exists, this replaces the old value with the new value.
+	 * @param map The original map.
+	 * @param key The key.
+	 * @param value The value.
+	 * @return The new version of the map with the key/value pair added.
+	 */
 	public static <K,V> ImmutableMap<K,V> assoc(final ImmutableMap<K,V> map, final K key, final V value)
 	{
 		return map == null ? map(e(key,value)) : map.assoc(key, value);
 	}
 	
+	/**
+	 * Construct a new immutable map, adding the given entries. If the original map is {@code null},
+	 * the initial map is created by calling {@link #map(Entry...)}. If a key already 
+	 * exists, this replaces the old value with the new value.
+	 * @param map The original map.
+	 * @param entries The entries to be added.
+	 * @return The new version of the map.
+	 */
 	@SafeVarargs
 	public static <K,V> ImmutableMap<K,V> assoc(final ImmutableMap<K,V> map, final Entry<K,V>... entries)
 	{
@@ -98,12 +138,29 @@ public final class Clj4jUtil
 		}
 	}
 	
+	/**
+	 * Construct a new immutable map, adding the given entries. If the original map is {@code null},
+	 * the initial map is created by calling {@link #map(Entry...)}. If a key already 
+	 * exists, this replaces the old value with the new value.
+	 * @param map The original map.
+	 * @param entries The entries to be added.
+	 * @return The new version of the map.
+	 */
 	@SuppressWarnings("unchecked")
 	public static <K,V> ImmutableMap<K,V> assoc(final ImmutableMap<K,V> map, final Collection<Entry<K,V>> entries)
 	{
 		return assoc(map, entries.toArray(new Entry[entries.size()]));
 	}
 	
+	/**
+	 * Construct a new immutable list with the values added. The values are
+	 * added either to the beginning or the end, depending on the type of the 
+	 * list. If the original list is {@code null}, {@link #list(Object...)} is
+	 * called to get the initial list.
+	 * @param list The original list.
+	 * @param values The values to be added.
+	 * @return The newly constructed list with values added.
+	 */
 	@SafeVarargs
 	public static <T> ImmutableList<T> conj(final ImmutableList<T> list, final T... values)
 	{
@@ -122,6 +179,15 @@ public final class Clj4jUtil
 		}
 	}
 	
+	/**
+	 * Construct a new immutable list with the values added. The values are
+	 * added either to the beginning or the end, depending on the type of the 
+	 * list. If the original list is {@code null}, {@link #list(Object...)} is
+	 * called to get the initial list.
+	 * @param list The original list.
+	 * @param values The values to be added.
+	 * @return The newly constructed list with values added.
+	 */
 	public static <T> ImmutableList<T> conj(final ImmutableList<T> list, final Collection<T> values)
 	{
 		if(list == null)
