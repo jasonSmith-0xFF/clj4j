@@ -16,41 +16,36 @@
  */
 package com.googlecode.clj4j;
 
-import static com.googlecode.clj4j.Clj4jUtil.list;
-import static java.util.Arrays.asList;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestCljVector extends Assert
+import static com.googlecode.clj4j.Clj4jUtil.*;
+
+/**
+ * Unit tests for static functions on {@link Clj4jUtil}.
+ * @author Jason Smith
+ */
+public class TestClj4jUtil extends Assert
 {
+	/**
+	 * I can construct a new list using {@link Clj4jUtil#conj(ImmutableList, java.util.Collection)}.
+	 */
 	@Test
-	public void testCons()
+	public void testConsWithCollection()
 	{
-		assertEquals("Cons operation did not produce expected list.", 
-				asList("A", "B", "C"), 
-				list("A", "B").conj("C"));
+		assertEquals("Conj did not produce the expected list.",
+				list("A", "B", "C", "D"),
+				conj(list("A", "B"), list("C", "D")));
 	}
 	
+	/**
+	 * I can construct a new list using {@link Clj4jUtil#conj(ImmutableList, Object...)}.
+	 */
 	@Test
-	public void testAssocN()
+	public void testConsWithVarargs()
 	{
-		assertEquals("Assoc operation did not produce expected list.",
-				asList("A", "B", "C"), 
-				list("A", "_", "C").assoc(1, "B"));
-	}
-	
-	@Test
-	public void testPop()
-	{
-		assertEquals("Pop didn't produce the right list.",
-				asList("A", "B"), list("A", "B", "C").pop());
-	}
-	
-	@Test
-	public void testPeek()
-	{
-		assertEquals("Peek didn't grab the expected value.",
-				"C", list("A", "B", "C").peek());
+		assertEquals("Conj did not produce the expected list.",
+				list("A", "B", "C", "D"),
+				conj(list("A", "B"), "C", "D"));
 	}
 }
