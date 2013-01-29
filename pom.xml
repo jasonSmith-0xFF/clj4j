@@ -3,8 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode</groupId>
 	<artifactId>clj4j</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
+	<packaging>jar</packaging>
 	<name>clj4j</name>
+	<description>Clojure data structures adapted for direct use in Java.</description>
 	<dependencies>
 		<dependency>
 			<groupId>org.clojure</groupId>
@@ -18,6 +20,20 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<url>https://code.google.com/p/clj4j/</url>
+	<licenses>
+		<license>
+			<name>The GNU Lesser General Public License, Version 3.0</name>
+			<url>http://www.gnu.org/licenses/lgpl.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<connection>scm:svn:http://clj4j.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://clj4j.googlecode.com/svn/trunk/</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://code.google.com/p/clj4j/source/</url>
+	</scm>
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -118,6 +134,30 @@
 								</requireJavaVersion>
 							</rules>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
