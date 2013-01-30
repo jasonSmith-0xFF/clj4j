@@ -7,6 +7,13 @@
 	<packaging>jar</packaging>
 	<name>clj4j</name>
 	<description>Clojure data structures adapted for direct use in Java.</description>
+	
+	<!-- 
+	  Deployment command:
+	    mvn clean deploy -P deployment -Dgpg.passphrase=passphrase
+	
+	-->
+	 
 	<dependencies>
 		<dependency>
 			<groupId>org.clojure</groupId>
@@ -32,8 +39,54 @@
 		<connection>scm:svn:http://clj4j.googlecode.com/svn/trunk/</connection>
 		<developerConnection>scm:svn:https://clj4j.googlecode.com/svn/trunk/</developerConnection>
 		<tag>HEAD</tag>
-		<url>http://code.google.com/p/clj4j/source/</url>
+		<url>http://clj4j.googlecode.com/svn/trunk/</url>
 	</scm>
+	<profiles>
+		<profile>
+			<id>deployment</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -134,30 +187,6 @@
 								</requireJavaVersion>
 							</rules>
 						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
 					</execution>
 				</executions>
 			</plugin>
