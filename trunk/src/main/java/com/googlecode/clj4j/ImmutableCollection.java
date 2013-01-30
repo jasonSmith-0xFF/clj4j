@@ -16,11 +16,12 @@
  */
 package com.googlecode.clj4j;
 
-import java.util.Map;
-
-public interface ImmutableMap<K,V> extends Map<K,V>, ImmutableCollection
+/**
+ * An immutable collection.
+ * @author Jason Smith
+ */
+public interface ImmutableCollection 
 {
-	ImmutableMap<K,V> assoc(K key, V val);
-
-	ImmutableMap<K,V> without(K key) ;
+	/** Message for methods that are not supported because they cause mutation. */
+	String UNSUPPORTED_MESSAGE = "Object is immutable.";
 }

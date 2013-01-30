@@ -20,38 +20,37 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import clojure.lang.ITransientMap;
-import clojure.lang.PersistentHashMap;
+import clojure.lang.PersistentTreeMap;
 
 /**
- * Adapts Clojure's {@link PersistentHashMap}, adding support for generics and Java sweeteners.
- * This is immutable, persistent hash-map for Java.
+ * Adapts Clojure's {@link PersistentTreeMap}, adding support for generics and Java sweeteners.
+ * This is an immutable, persistent sorted map for Java.
  * @author Jason Smith
  *
  * @param <K> Key type.
  * @param <V> Value type.
  */
-public class CljHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
+public class CljTreeMap<K,V> implements ImmutableMap<K,V>, Cloneable
 {
-	private final PersistentHashMap map;
-
+	private final PersistentTreeMap map;
+	
 	/**
-	 * Constructor. If this is a {@link PersistentHashMap} or {@link CljHashMap}, this is a <tt>O(1)</tt> operation.
+	 * Constructor. If this is a {@link PersistentTreeMap} or {@link CljTreeMap}, this is a <tt>O(1)</tt> operation.
 	 * @param map The source map to copy.
 	 */
-	public CljHashMap(final Map<K,V> map)
+	public CljTreeMap(final Map<K,V> map)
 	{
-		if(map instanceof PersistentHashMap)
+		if(map instanceof PersistentTreeMap)
 		{
-			this.map = (PersistentHashMap)map;
+			this.map = (PersistentTreeMap)map;
 		}
-		else if(map instanceof CljHashMap)
+		else if(map instanceof CljTreeMap)
 		{
-			this.map = ((CljHashMap<K,V>)map).map;
+			this.map = ((CljTreeMap<K,V>)map).map;
 		}
 		else
 		{
-			this.map = (PersistentHashMap)PersistentHashMap.create(map);
+			this.map = (PersistentTreeMap)PersistentTreeMap.create(map);
 		}
 	}
 	
@@ -60,9 +59,9 @@ public class CljHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
 	 * @param entries The collection of entries.
 	 */
 	@SafeVarargs
-	public CljHashMap(final Map.Entry<K,V>... entries)
+	public CljTreeMap(final Map.Entry<K,V>... entries)
 	{
-		ITransientMap ret = PersistentHashMap.EMPTY.asTransient();
+		PersistentTreeMap ret = PersistentTreeMap.EMPTY;
 		if(entries != null)
 		{
 			for(final Map.Entry<K,V> entry : entries)
@@ -70,7 +69,7 @@ public class CljHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
 				ret = ret.assoc(entry.getKey(), entry.getValue());
 			}
 		}
-		this.map = (PersistentHashMap)ret.persistent();
+		this.map = ret;
 	}
 	
 	@Override
@@ -83,31 +82,6 @@ public class CljHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
 	public boolean isEmpty() 
 	{
 		return map.isEmpty();
-	}
-
-	@Override
-	public int hashCode() 
-	{
-		return map.hashCode();
-	}
-
-	@Override
-	public boolean equals(final Object obj) 
-	{
-		return map.equals(obj);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	protected CljHashMap<K,V> clone() throws CloneNotSupportedException 
-	{
-		return (CljHashMap<K,V>)super.clone();
-	}
-
-	@Override
-	public String toString() 
-	{
-		return map.toString();
 	}
 
 	@Override
@@ -178,13 +152,38 @@ public class CljHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
 	@Override
 	public ImmutableMap<K, V> assoc(final K key, final V val) 
 	{
-		return new CljHashMap<K,V>((PersistentHashMap)map.assoc(key, val));
+		return new CljTreeMap<K,V>((PersistentTreeMap)map.assoc(key, val));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public ImmutableMap<K, V> without(final K key) 
 	{
-		return new CljHashMap<K,V>((PersistentHashMap)map.without(key));
+		return new CljTreeMap<K,V>((PersistentTreeMap)map.without(key));
+	}
+	
+	@Override
+	public int hashCode() 
+	{
+		return map.hashCode();
+	}
+
+	@Override
+	public boolean equals(final Object obj) 
+	{
+		return map.equals(obj);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected CljTreeMap<K,V> clone() throws CloneNotSupportedException 
+	{
+		return (CljTreeMap<K,V>)super.clone();
+	}
+
+	@Override
+	public String toString() 
+	{
+		return map.toString();
 	}
 }

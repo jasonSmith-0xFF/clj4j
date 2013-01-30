@@ -88,6 +88,18 @@ public final class Clj4jUtil
 	}
 	
 	/**
+	 * Construct an immutable sorted-map ({@link CljTreeMap}) from a collection of entries.
+	 * @param entries The collection of entries.
+	 * @return The sorted-map.
+	 */
+	@SafeVarargs
+	public static <K,V> ImmutableMap<K,V> smap(final Entry<K,V>... entries)
+	{
+		return new CljTreeMap<>(entries);
+	}
+
+	
+	/**
 	 * Construct an immutable list ({@link CljVector}) from a collection of values.
 	 * @param values The values.
 	 * @return The list.

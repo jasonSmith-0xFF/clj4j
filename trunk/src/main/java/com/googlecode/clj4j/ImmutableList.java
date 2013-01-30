@@ -18,24 +18,32 @@ package com.googlecode.clj4j;
 
 import java.util.List;
 
-public interface ImmutableList<T> extends List<T>
+public interface ImmutableList<T> extends List<T>, ImmutableCollection
 {
 	/**
-	 * Add the value to the optimal end of the list; the end depends on the implementation.
+	 * Add the value to the end of the list.
 	 * @param values Value to add.
 	 * @return The constructed list with the value added.
 	 */
-	ImmutableList<T> conj( final T value);
+	ImmutableList<T> conj(final T value);
 	
 	/**
-	 * Insert the value at the given index.
+	 * Replace the value at the given index.
 	 * @param i The index.
 	 * @param val The value.
 	 * @return The constructed list with the value added.
 	 */
 	ImmutableList<T> assoc(int i, final T val);
 	
+	/**
+	 * Pop a value from the end of the list.
+	 * @return The list with the end value removed.
+	 */
 	ImmutableList<T> pop();
 	
+	/**
+	 * Peek at the value at the end of the list.
+	 * @return The value at the end of the list.
+	 */
 	T peek();
 }
