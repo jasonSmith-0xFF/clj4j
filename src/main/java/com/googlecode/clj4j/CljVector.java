@@ -36,8 +36,6 @@ public class CljVector<T> implements ImmutableList<T>, Cloneable
 {
 	private final PersistentVector list;
 	
-	private static final String UNSUPPORTED_MESSAGE = "Object is immutable.";
-
 	/**
 	 * Constructor.
 	 * @param values The ordered list of initial values.
