@@ -7,12 +7,12 @@
 	<packaging>jar</packaging>
 	<name>clj4j</name>
 	<description>Clojure data structures adapted for direct use in Java.</description>
-	
-	<!-- 
-	  Deployment command:
-	    mvn clean deploy -P deployment -Dgpg.passphrase=passphrase
-	-->
-	 
+
+	<!-- Deployment command: mvn clean deploy -P deployment -Dgpg.passphrase=passphrase -->
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.clojure</groupId>
