@@ -16,9 +16,12 @@
  */
 package com.googlecode.clj4j;
 
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import clojure.lang.RT;
 
 /**
  * Utility methods.
@@ -33,6 +36,16 @@ public final class Clj4jUtil
 	{
 	}
 	
+	static
+	{
+		/*
+		 * This is necessary to force RT to initialize before trying
+		 * to create an instance. Fixes a class-loader bug.
+		 */
+		@SuppressWarnings("unused")
+		final Charset UTF8 = RT.UTF8;
+	}
+
 	/**
 	 * Create an immutable instance of {@link Entry}.
 	 * @param key They key.
@@ -109,6 +122,17 @@ public final class Clj4jUtil
 		return new CljHashSet<>(values);
 	}
 	
+	/**
+	 * Construct an immutable sorted-set ({@link CljTreeSet}) from a collection of entries.
+	 * @param values The values.
+	 * @return The set.
+	 */
+	@SafeVarargs
+	public static <T> ImmutableSet<T> sset(final T... values)
+	{
+		return new CljTreeSet<>(values);
+	}
+
 	/**
 	 * Construct an immutable list ({@link CljVector}) from a collection of values.
 	 * @param values The values.
@@ -195,7 +219,7 @@ public final class Clj4jUtil
 			ImmutableList<T> result = list;
 			for(final T value : values)
 			{
-				result = result.conj(value);
+				result = result.cons(value);
 			}
 			return result;
 		}
@@ -221,7 +245,7 @@ public final class Clj4jUtil
 			ImmutableList<T> result = list;
 			for(final T value : values)
 			{
-				result = result.conj(value);
+				result = result.cons(value);
 			}
 			return result;
 		}

@@ -19,39 +19,56 @@ package com.googlecode.clj4j;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.TreeSet;
 
-import clojure.lang.PersistentHashSet;
+import clojure.lang.PersistentTreeSet;
 
-public class CljHashSet<T> implements ImmutableSet<T>, Cloneable
+public class CljTreeSet<T> implements ImmutableSet<T>, Cloneable
 {
-	final PersistentHashSet set;
+	final PersistentTreeSet set;
 	
 	/**
 	 * Constructor.
 	 * @param values The collection of initial values.
 	 */
 	@SafeVarargs
-	public CljHashSet(final T... values)
+	public CljTreeSet(final T... values)
 	{
-		this.set = PersistentHashSet.create(values);
+		PersistentTreeSet ret = PersistentTreeSet.EMPTY;
+		if(values != null)
+		{
+			for(final T value : values)
+			{
+				ret = (PersistentTreeSet)ret.cons(value);
+			}
+		}
+		this.set = ret;
 	}
 	
-	public CljHashSet(final Collection<T> values)
+	public CljTreeSet(final Collection<T> values)
 	{
-		if(values instanceof CljHashSet)
+		if(values instanceof CljTreeSet)
 		{
-			this.set = ((CljHashSet<T>)values).set;
+			this.set = ((CljTreeSet<T>)values).set;
 		}
-		else if(values instanceof PersistentHashSet)
+		else if(values instanceof PersistentTreeSet)
 		{
-			this.set = (PersistentHashSet)values;
+			this.set = (PersistentTreeSet)values;
 		}
 		else
 		{
-			this.set = PersistentHashSet.create(values);
+			PersistentTreeSet ret = PersistentTreeSet.EMPTY;
+			if(values != null)
+			{
+				for(final T value : values)
+				{
+					ret = (PersistentTreeSet)ret.cons(value);
+				}
+			}
+			this.set = ret;
 		}
 	}
-
+	
 	@Override
 	public int size() 
 	{
@@ -83,11 +100,11 @@ public class CljHashSet<T> implements ImmutableSet<T>, Cloneable
 		return set.toArray();
 	}
 
-	@SuppressWarnings({ "hiding", "unchecked" })
+	@SuppressWarnings({ "unchecked", "hiding" })
 	@Override
 	public <T> T[] toArray(final T[] a) 
 	{
-		return (T[])set.toArray(a);
+		return (T[]) set.toArray(a);
 	}
 
 	@Override
@@ -121,7 +138,7 @@ public class CljHashSet<T> implements ImmutableSet<T>, Cloneable
 	}
 
 	@Override
-	public boolean removeAll(final Collection<?> c) 
+	public boolean removeAll(Collection<?> c) 
 	{
 		throw new UnsupportedOperationException(UNSUPPORTED_MESSAGE);
 	}
@@ -147,12 +164,12 @@ public class CljHashSet<T> implements ImmutableSet<T>, Cloneable
 	@Override
 	protected ImmutableSet<T> clone() throws CloneNotSupportedException 
 	{
-		return new CljHashSet<T>(this);
+		return new CljTreeSet<T>(this);
 	}
 
 	@Override
 	public String toString() 
 	{
-		return new LinkedHashSet<T>(this).toString();
+		return new TreeSet<T>(this).toString();
 	}
 }

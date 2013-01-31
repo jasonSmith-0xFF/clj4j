@@ -16,6 +16,7 @@
  */
 package com.googlecode.clj4j;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -46,19 +47,19 @@ public class CljVector<T> implements ImmutableList<T>, Cloneable
 		this.list = PersistentVector.create(values);
 	}
 	
-	public CljVector(final List<T> list)
+	public CljVector(final Collection<T> values)
 	{
-		if(list instanceof CljVector)
+		if(values instanceof CljVector)
 		{
-			this.list = ((CljVector<T>)list).list;
+			this.list = ((CljVector<T>)values).list;
 		}
-		else if(list instanceof PersistentVector)
+		else if(values instanceof PersistentVector)
 		{
-			this.list = (PersistentVector)list;
+			this.list = (PersistentVector)values;
 		}
 		else
 		{
-			this.list = PersistentVector.create(list);
+			this.list = PersistentVector.create(values);
 		}
 	}
 	
@@ -227,7 +228,7 @@ public class CljVector<T> implements ImmutableList<T>, Cloneable
 	@Override
 	public String toString() 
 	{
-		return list.toString();
+		return new ArrayList<T>(this).toString();
 	}
 
 	/**
@@ -237,7 +238,7 @@ public class CljVector<T> implements ImmutableList<T>, Cloneable
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public final ImmutableList<T> conj(final T value) 
+	public final ImmutableList<T> cons(final T value) 
 	{
 		return new CljVector<T>(list.cons(value));
 	}

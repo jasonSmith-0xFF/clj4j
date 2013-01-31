@@ -29,7 +29,7 @@ public class TestCljVector extends Assert
 	{
 		assertEquals("Cons operation did not produce expected list.", 
 				asList("A", "B", "C"), 
-				list("A", "B").conj("C"));
+				list("A", "B").cons("C"));
 	}
 	
 	@Test
