@@ -98,6 +98,16 @@ public final class Clj4jUtil
 		return new CljTreeMap<>(entries);
 	}
 
+	/**
+	 * Construct an immutable set ({@link CljHashSet}) from a collection of entries.
+	 * @param values The values.
+	 * @return The set.
+	 */
+	@SafeVarargs
+	public static <T> ImmutableSet<T> set(final T... values)
+	{
+		return new CljHashSet<>(values);
+	}
 	
 	/**
 	 * Construct an immutable list ({@link CljVector}) from a collection of values.
