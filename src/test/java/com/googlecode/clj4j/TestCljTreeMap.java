@@ -16,17 +16,29 @@
  */
 package com.googlecode.clj4j;
 
-import static com.googlecode.clj4j.Clj4jUtil.e;
-import static com.googlecode.clj4j.Clj4jUtil.smap;
-
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.googlecode.clj4j.Clj4jUtil.*;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import clojure.lang.PersistentHashMap;
+import clojure.lang.PersistentTreeMap;
+import clojure.lang.RT;
+
 public class TestCljTreeMap extends Assert
 {
+//	@Test
+//	public void blah()
+//	{
+//		PersistentHashMap m = PersistentHashMap.create();
+//		final Charset UTF8 = RT.UTF8;
+//		PersistentTreeMap map = new PersistentTreeMap();
+//	}
+	
 	@Test
 	public void testEquals()
 	{

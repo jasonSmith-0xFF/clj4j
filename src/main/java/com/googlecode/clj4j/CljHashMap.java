@@ -17,6 +17,7 @@
 package com.googlecode.clj4j;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -107,7 +108,7 @@ public class CljHashMap<K,V> implements ImmutableMap<K,V>, Cloneable
 	@Override
 	public String toString() 
 	{
-		return map.toString();
+		return new LinkedHashMap<K,V>(this).toString();
 	}
 
 	@Override

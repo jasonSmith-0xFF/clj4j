@@ -25,7 +25,7 @@ public interface ImmutableList<T> extends List<T>, ImmutableCollection
 	 * @param values Value to add.
 	 * @return The constructed list with the value added.
 	 */
-	ImmutableList<T> conj(final T value);
+	ImmutableList<T> cons(final T value);
 	
 	/**
 	 * Replace the value at the given index.

@@ -16,11 +16,14 @@
  */
 package com.googlecode.clj4j;
 
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import clojure.lang.PersistentTreeMap;
+import clojure.lang.RT;
 
 /**
  * Adapts Clojure's {@link PersistentTreeMap}, adding support for generics and Java sweeteners.
@@ -33,6 +36,16 @@ import clojure.lang.PersistentTreeMap;
 public class CljTreeMap<K,V> implements ImmutableMap<K,V>, Cloneable
 {
 	private final PersistentTreeMap map;
+	
+	static
+	{
+		/*
+		 * This is necessary to force RT to initialize before trying
+		 * to create an instance. Fixes a class-loader bug.
+		 */
+		@SuppressWarnings("unused")
+		final Charset UTF8 = RT.UTF8;
+	}
 	
 	/**
 	 * Constructor. If this is a {@link PersistentTreeMap} or {@link CljTreeMap}, this is a <tt>O(1)</tt> operation.
@@ -61,7 +74,7 @@ public class CljTreeMap<K,V> implements ImmutableMap<K,V>, Cloneable
 	@SafeVarargs
 	public CljTreeMap(final Map.Entry<K,V>... entries)
 	{
-		PersistentTreeMap ret = PersistentTreeMap.EMPTY;
+		PersistentTreeMap ret = new PersistentTreeMap();
 		if(entries != null)
 		{
 			for(final Map.Entry<K,V> entry : entries)
@@ -184,6 +197,6 @@ public class CljTreeMap<K,V> implements ImmutableMap<K,V>, Cloneable
 	@Override
 	public String toString() 
 	{
-		return map.toString();
+		return new TreeMap<K,V>(this).toString();
 	}
 }
